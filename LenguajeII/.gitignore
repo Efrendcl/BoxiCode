@@ -1,0 +1,8 @@
+# Bloquear cachés automáticos de Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Bloquear archivos basura del sistema operativo
+.DS_Store
+Thumbs.db
