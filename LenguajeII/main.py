@@ -17,15 +17,15 @@ def list_files_in_directory(directorio):
     # Validar que la carpeta exista en tu almacenamiento de Drive
     if not os.path.isdir(directorio):
         return {
-            "status": "error", 
+            "status": "error",
             "mensaje": f"Directorio '{NOMBRE_CARPETA}' no encontrado en tu Google Drive. Verifica el nombre."
         }
 
-    # Extensiones permitidas 
+    # Extensiones permitidas
     extensiones = ('.json', '.csv', '.jpg', '.jpeg', '.png')
     archivos = []
-    imagenes_encontradas = [] 
-    
+    imagenes_encontradas = []
+
     inventario = {
         "existe": False,
         "es_valido": False,
@@ -48,7 +48,7 @@ def list_files_in_directory(directorio):
             # Diferenciación visual e inclusión de imágenes
             if nombre.lower().endswith(('.jpg', '.jpeg', '.png')):
                 print(f" 🖼️  {nombre} (Imagen) | {tamano_kb} KB | Modificado: {fecha}")
-                
+
                 # Extraemos el texto limpio del nombre sin la extensión
                 nombre_sin_extension = os.path.splitext(nombre)[0]
                 imagenes_encontradas.append({"nombre_boxeador": nombre_sin_extension, "ruta": ruta})
@@ -86,43 +86,43 @@ def list_files_in_directory(directorio):
         "total_archivos": len(archivos),
         "archivos": archivos,
         "inventario": inventario,
-        "lista_imagenes": imagenes_encontradas  
+        "lista_imagenes": imagenes_encontradas
     }
-
 # REEMPLAZA DESDE AQUÍ HASTA EL FINAL:
 if __name__ == "__main__":
     resultado = list_files_in_directory(DIRECTORIO)
-    
+
     # Clonamos la lista de imágenes para no alterar el diccionario original de la API
     imagenes = resultado.get("lista_imagenes", [])
-    
-    # Mostrar el retorno estructurado puro 
+
+    # Mostrar el retorno estructurado puro
     print("\n📦 Respuesta Final (Payload para API requerido en Criterio 4):")
     # Limpiamos la propiedad temporal
     payload_limpio = {k: v for k, v in resultado.items() if k != 'lista_imagenes'}
     print(json.dumps(payload_limpio, indent=2, ensure_ascii=False))
-    
+
     print("\n" + "="*60 + "\n")
-    
+
     # Tarjetas automatizadas de boxeo ordenadas abajo
     if imagenes:
         print("🥊 --- TARJETAS DE BOXEO AUTOMATIZADAS ---")
         boxeadores_json = resultado["inventario"]["datos"] if resultado["inventario"]["es_valido"] else []
         for img in imagenes:
             datos_boxeador = None
-            
-            # Buscamos si el nombre del archivo coincide con el campo "Boxeador" del JSON
+
+            # Buscamos si el nombre del archivo coincide de forma flexible con el campo "Boxeador" del JSON
             for b in boxeadores_json:
                 nombre_json = str(b.get("Boxeador", "")).strip().lower()
                 nombre_archivo = str(img["nombre_boxeador"]).strip().lower()
-                
-                if nombre_json == nombre_archivo:
+
+                # NUEVA LÓGICA FLEXIBLE: Verifica si uno está contenido dentro del otro
+                if nombre_json == nombre_archivo or nombre_json in nombre_archivo or nombre_archivo in nombre_json:
                     datos_boxeador = b
                     break
-            
+
             # Muestra la foto del púgil primero
             display(Image(filename=img['ruta'], width=220))
-            
+
             # Muestra los detalles técnicos del JSON justo abajo de su respectiva foto
             if datos_boxeador:
                 print(f"👤 Boxeador: {datos_boxeador.get('Boxeador').strip()}")
@@ -131,9 +131,8 @@ if __name__ == "__main__":
             else:
                 print(f"👤 Archivo encontrado: {img['nombre_boxeador']}.jpg")
                 print("⚠️ No se encontraron detalles de este boxeador en el archivo JSON.")
-                print("💡 Asegúrate de que el archivo de imagen se llame EXACTAMENTE igual que en el JSON.")
-                
+                print("💡 Asegúrate de que el archivo de imagen se llame de forma similar que en el JSON.")
+
             print("-" * 60)
     else:
         print("ℹ️ No se encontraron imágenes de boxeadores en la carpeta.")
-
