@@ -2,7 +2,7 @@
 
 Interfaz interactiva para **Google Colab** que permite **buscar, filtrar y ordenar** los archivos de una carpeta de Google Drive: imágenes, música, videos y documentos.
 
-[![Open In Colab]([https://google.com](https://github.com/Efrendcl))](https://github.com/Efrendcl/BoxiCode/tree/buscador-google-drive)
+[![Open In Colab]([[https://google.com](https://github.com/Efrendcl](https://colab.research.google.com/drive/1gY9CACRQWjCnrTyj4yZxGt7sW4LmkOf6?authuser=1)))](https://github.com/Efrendcl/BoxiCode/tree/buscador-google-drive)
 
 
 ---
