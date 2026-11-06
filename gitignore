@@ -1,0 +1,50 @@
+# ---------- Python ----------
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# ---------- Entornos virtuales ----------
+.venv/
+venv/
+env/
+ENV/
+
+# ---------- Jupyter / Colab ----------
+.ipynb_checkpoints/
+*/.ipynb_checkpoints/
+.virtual_documents/
+
+# ---------- Datos y archivos personales ----------
+# Evita subir por accidente fotos, música, videos o documentos de prueba
+*.mp3
+*.wav
+*.aac
+*.m4a
+*.ogg
+*.mp4
+*.mov
+*.avi
+*.mkv
+*.webm
+*.zip
+*.rar
+
+# ---------- Credenciales (nunca las subas) ----------
+.env
+*.pem
+*.key
+credentials.json
+token.json
+client_secret*.json
+
+# ---------- Editores y sistema operativo ----------
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+desktop.ini
